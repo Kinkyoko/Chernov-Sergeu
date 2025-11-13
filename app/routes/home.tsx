@@ -41,7 +41,7 @@ const App: React.FC = () => {
 function removeTask (task:string) {
           const index = plainOptions.indexOf(task, 0);
             if (index > -1) {
-              plainOptions.splice(index, 1);
+              setPlainOptions(plainOptions.splice(index, 1));
 }
         }
 
@@ -78,9 +78,11 @@ function removeTask (task:string) {
           <br/> 
 
           {plainOptions.map((task, index) => {
-            return <div style={{ height: 30, width: '100%',borderRadius: borderRadiusLG, background: 'rgba(255, 255, 255, 1)' }}>
+            return <div style={{ height: 60, width: '100%',borderRadius: borderRadiusLG, background: 'rgba(255, 255, 255, 1)' }}>
               <div>
-                <Col offset={1}>{task}
+                <br/> 
+                <Col offset={1}>
+                {task}
               <Button style={{height: 15, width:30 }} onClick={( ) => {
                 removeTask(task)
               }}>-</Button>
