@@ -1,7 +1,6 @@
 import type { Route } from "./+types/home";
 import React, { useState } from 'react';
-import { Button, Checkbox, Input , Col, Row, } from 'antd';
-import type { GetProp } from 'antd';
+import { Button, theme, Checkbox, Input , Col, Row, Divider, } from 'antd';
 
 
 
@@ -9,13 +8,9 @@ import type { GetProp } from 'antd';
 export function meta({}: Route.MetaArgs) {
   return [
     { title: "Todo list" },
-    { name: "description", content: "Welcome to React Router!" },
+    
   ];
 }
-
-type FieldType = {
-  username?: any;
-};
 
 
 
@@ -25,53 +20,79 @@ type FieldType = {
 
 const CheckboxGroup = Checkbox.Group;
 
-// let plainOptions = ['Apple', 'Pear', 'Orange', '1'];
-// let todo = ['1']
-
 
 
 const App: React.FC = () => {
   
-  const [plainOptions, setPlainOptions] = useState(['Почистить зубы'])
+  const {
+    token: { borderRadiusLG },
+  } = theme.useToken();
 
-  const [username, settodo] = useState<string>('')
+
+
+  const [plainOptions, setPlainOptions] = useState(['Почистить зубы']);
+  const [username, settodo] = useState<string>('');
 
   const handleInputChange = 
         (e: React.ChangeEvent<HTMLInputElement>) => {
             settodo(e.target.value);
         };
 
-  const onChange = (list: string[]) => {
-    
-  };
+function removeTask (task:string) {
+          const index = plainOptions.indexOf(task, 0);
+            if (index > -1) {
+              plainOptions.splice(index, 1);
+}
+        }
 
-  function foo () {
-    setPlainOptions(plainOptions.concat([username]))
+  // const onChange = (list: string[]) => {
+    
+  // };
+      
+  function addTask () {
+    setPlainOptions([...plainOptions, username]);
+    // setPlainOptions(plainOptions.concat([username]))
    
 }
 
 
   return (
-    <>
-      <Col span = {12} offset={6}>
-      <Input style={{ width: '100%' }} value={username}
-      onChange={handleInputChange}
-      placeholder="Введите вашу задачу" />
-      </Col>
-      
-      <Row/>
-      <Col offset={6}>
-        <Button  type="primary" onClick={foo}>
-            Добавить
-        </Button>
-      </Col>                  
-      <br/>          
-
-      <CheckboxGroup style={{ flexDirection: 'column' }} options={plainOptions}  onChange={onChange}/>
+    <div style={{ height: '100vh', background: 'rgba(32, 179, 236, 1)' }}> 
+      <>
         
+       <div style={{height: 100,padding: 24, borderRadius: borderRadiusLG,  width: '100%', background: 'rgba(255, 255, 255, 1)'}}> 
+        <Col  offset={1} style={{ width: '100%'}} >
+          
+            <Input style={{ width: '70%' }} value={username}
+            onChange={handleInputChange}
+            placeholder="Введите вашу задачу" />
+
+            <Button  type="primary" onClick={addTask}>
+                Добавить
+            </Button>
+          
+          
+          </Col> 
+          </div>                 
+          <br/> 
+          <br/> 
+
+          {plainOptions.map((task, index) => {
+            return <div style={{ height: 30, width: '100%',borderRadius: borderRadiusLG, background: 'rgba(255, 255, 255, 1)' }}>
+              <div>
+                <Col offset={1}>{task}
+              <Button style={{height: 15, width:30 }} onClick={( ) => {
+                removeTask(task)
+              }}>-</Button>
+                </Col>
+              </div>
+            </div>
+          })}
+       
 
       
     </>
+   </div> 
     
   );
 
