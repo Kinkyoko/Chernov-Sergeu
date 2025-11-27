@@ -2,7 +2,7 @@ import type { Route } from "./+types/home";
 import React, { useState } from 'react';
 import { Button, theme, Input , Col, Row, Divider, Flex } from 'antd';
 import {DeleteOutlined, FormOutlined, CheckOutlined, EditOutlined} from '@ant-design/icons';
-
+import { supabase } from './supabaseClient.js';
 
 
 export function meta({}: Route.MetaArgs) {
