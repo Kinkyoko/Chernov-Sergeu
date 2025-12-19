@@ -1,135 +1,58 @@
-import type { Route } from "./+types/home";
 import React, { useState } from 'react';
-import { Button, theme, Input , Col, Divider, Flex } from 'antd';
-import {DeleteOutlined, FormOutlined, CheckOutlined} from '@ant-design/icons';
-import { supabase } from './supabaseClient.js';
-
-export function meta({}: Route.MetaArgs) {
-  return [
-    { title: "Todo list" },
-    
-  ];
-}
+import { Button, Flex, Divider } from 'antd';
 
 
-
-
-
+document.title = "RandomWORD"
+ 
 const App: React.FC = () => {
-  
-  const {
-    token: { borderRadiusLG },
-  } = theme.useToken();
 
+  const [randomItem, setRandomWord] = useState('Яблоко')
+  const petrandomword = ["Яблоко", "Груша", "Банан", "Киви"]  
 
+function Changeword () {
+    const randomNumber = Math.floor(Math.random() * 4)
+    setRandomWord(petrandomword[randomNumber])
+} 
 
-  const [plainOptions, setPlainOptions] = useState<{id: number; name: string}[]>([]);
-  const [username, settodo] = useState<string>('');
-  const [editableTaskId, setEditableTaskId] = useState<number>(0)
-  const [editvalue, seteditvalue] = useState<string>('');
-  
+function dontpress () {
+    window.open('https://www.youtube.com/watch?v=xvFZjo5PgG0')
+} 
 
-  const handleInputChange = 
-        (e: React.ChangeEvent<HTMLInputElement>) => {
-            settodo(e.target.value);
-        };
-
-  const editInputChange = 
-        (e: React.ChangeEvent<HTMLInputElement>) => {
-            seteditvalue(e.target.value);
-        };
-
-function removeTask (taskId: number) {
-  setPlainOptions(plainOptions.filter(task => task.id !== taskId))
-  }
-
-function EditTask (taskId: number,taskName: string) {
-  setEditableTaskId(taskId)
-  seteditvalue(taskName)
-  }
-
-function CheckTask (Index: number, taskId: number,editTask: string) {
-  plainOptions.splice(Index, 1, {id: taskId, name: editTask})
-  setPlainOptions
-  setEditableTaskId(0)
-  }
-
-function addTask () {
-    setPlainOptions([...plainOptions, { id: Math.random(), name: username}]);
-    
+function deleteworld () {
+    window.close()
+} 
    
-}
-
-
   return (
-    <div style={{ height: '100vh', background: 'rgba(32, 179, 236, 1)' }}> 
-      <>
-        
-       <div style={{height: 100,padding: 24, borderRadius: borderRadiusLG,  width: '100%', background: 'rgba(255, 255, 255, 1)'}}> 
-        <Col  offset={1} style={{ width: '100%'}} >
-          
-            <Input style={{ width: '70%' }} value={username}
-            onChange={handleInputChange}
-            placeholder="Введите вашу задачу" />
+    
+    <div style={{ height: '100vh', background: 'rgba(51, 51, 51, 1)' }}> 
 
-            <Button  type="primary" onClick={addTask}>
-                Добавить
-            </Button>
-          
-          
-          </Col> 
-          </div>                 
-          <br/> 
-          <br/> 
+      <h1 style={{textAlign: 'center', fontSize: '60px', background: 'rgba(129, 125, 125, 1)'}}>Выбор случайного слова</h1>
 
-<div>
-          {plainOptions.map((task,index) => {
-            return <div key={task.id} style={{ height: 80, width: '100%',borderRadius: borderRadiusLG, background: 'rgba(255, 255, 255, 1)' }}>
-              <div>
-                <br/> 
-                <Col offset={1} span={22}>
-                {editableTaskId === task.id ?  
-                <div>
-                  <Input style={{ width: '50%' }} value={editvalue}
-                    onChange={editInputChange} />
+      <div> 
+          <p style={{ fontWeight: "bold", fontSize: '40px', width: '100%', textAlign: 'center', color: 'rgba(172, 5, 194, 1)'}}>{randomItem}</p>
 
-                  <Button icon = {<DeleteOutlined/>} style={{ background: 'rgba(255, 0, 0, 1)'}} onClick={( ) => {
-                      removeTask(task.id)
-                  }}></Button>
+            <Flex vertical gap="small" style={{ width: '100%'}}>
 
-                  <Button icon = {<CheckOutlined />} style={{background: 'rgba(0, 255, 64, 1)' }} onClick={( ) => {
-                      CheckTask(index,task.id,editvalue)
-                  }}></Button>
-                
-                
-                
-                </div> : 
-                  
-                  <Flex gap='small' align="center">
-                    <h3>{task.name}</h3>
-                    <Button icon = {<DeleteOutlined/>} style={{ background: 'rgba(255, 0, 0, 1)'}} onClick={( ) => {
-                      removeTask(task.id)
-                    }}></Button>
-                    <Button icon = {<FormOutlined/>} type="primary" style={{background: 'rgba(0, 8, 255, 1)' }} onClick={( ) => {
-                      EditTask(task.id,task.name)
-                    }}></Button>
-                  
-                  
-                  </Flex>
-                  
-                
-                }
-                <Divider size = 'small' style={{ borderWidth: 1, borderColor: '#000000ff' }}></Divider>
-              
-                </Col>
-              </div>
+              <Button  style={{fontSize: '40px', background: 'rgba(30, 31, 30, 1)', color: 'rgba(143, 143, 143, 1)', height:  '60px'  }}  onClick={Changeword}>
+                  Изменить слово
+              </Button>
+
+            </Flex>
+
+            <button onClick={dontpress}>
+              <p style={{color: 'rgba(44, 40, 40, 1)',textAlign: 'center'}}>
+                  RICKROLL
+              </p>
+            </button>
+            <div style={{paddingTop: '1050px'}}></div>
+              <button onClick={deleteworld} style={{ width: '100%'}}>
+                <p style={{color: 'rgba(37, 37, 37, 1)',textAlign: 'center'}}>
+                    adios
+                </p>
+              </button>
             </div>
-          })}
-       </div>
+      </div>  
 
-      
-    </>
-   </div> 
     
   );
 
